@@ -17,8 +17,8 @@ import * as _ from 'underscore/underscore';
 })
 export class GastosPage {
 
-
   expenses = [];
+  types = [];
   expensesToShow = [];
   newExpense: {};
   loading: boolean = true;
@@ -36,11 +36,13 @@ export class GastosPage {
     this.storage.get('gastos').then((val) => {
       this.expenses = val;
       console.log('gastos', this.expenses);
-
       this.filterDate();
-
-
       this.loading = false;
+    });
+
+    this.storage.get('tipos').then((val) => {
+      this.types = val;
+      console.log('types', this.types);
     });
   }
 
@@ -78,6 +80,10 @@ export class GastosPage {
     };
     this.filterDate();
     console.log('new gastos', this.expenses);
+  }
+
+  deleteExpense(expense) {
+    console.log("borrar Gasto", expense);
   }
 
   getTotal() {

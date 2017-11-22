@@ -1,18 +1,69 @@
-<!--
-  Generated template for the TiposPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>tipos</ion-title>
+    <ion-title>
+      App Gastos
+      <!--<p col-10 col-sm-11 class="subtitle">Hojas de Cargo</p>-->
+    </ion-title>
+    <button ion-button end menuToggle>
+      <!--<ion-icon name="menu"></ion-icon>-->
+    </button>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
 
+  <ion-row no-padding>
+    <ion-col col-10 col-sm-10>
+      <ion-item>
+        <ion-label>Nombre</ion-label>
+        <ion-input type="text" [(ngModel)]="newType.name" name="name"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col col-2 col-sm-2>
+      <ion-item>
+        <button ion-button type="submit" (click)="saveType(newType)">Crear</button>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-item>
+    <ion-list [hidden]="!hasTypes">
+      <ion-item>
+        <ion-row no-padding>
+
+          <ion-col col-10 col-sm-10>
+            Tipo
+          </ion-col>
+          <ion-col col-2 col-sm-2>
+          </ion-col>
+
+
+        </ion-row>
+      </ion-item>
+    </ion-list>
+
+    <ion-list [hidden]="!hasTypes">
+      <ion-item *ngFor="let type of types">
+        <ion-row no-padding>
+          <ion-col col-10 col-sm-10>
+            {{type.name}}
+          </ion-col>
+          <ion-col col-2 col-sm-2>
+            <button ion-button type="danger" (click)="deleteType(type)"></button>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+    </ion-list>
+  </ion-item>
+  <ion-item>
+    <ion-row [hidden]="hasTypes">
+      No se encuentran Tipos de Gastos.
+    </ion-row>
+  </ion-item>
+
 </ion-content>
+
+<ion-footer>
+  Total: {{getTotal()}}
+</ion-footer>
