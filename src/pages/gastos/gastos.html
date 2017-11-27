@@ -5,7 +5,7 @@
       <!--<p col-10 col-sm-11 class="subtitle">Hojas de Cargo</p>-->
     </ion-title>
     <button ion-button end menuToggle>
-      <!--<ion-icon name="menu"></ion-icon>-->
+      <ion-icon name="menu"></ion-icon>
     </button>
   </ion-navbar>
 </ion-header>
@@ -14,100 +14,94 @@
 <ion-content padding>
 
   <ion-row no-padding>
-    <ion-col col-10 col-sm-10>
-      <ion-item>
-        <ion-label>Nombre</ion-label>
-        <ion-input type="text" [(ngModel)]="newExpense.name" name="name"></ion-input>
-      </ion-item>
-    </ion-col>
-    <ion-col col-2 col-sm-2>
-      <ion-item>
-        <ion-label>Descr.</ion-label>
-        <ion-checkbox [(ngModel)]="hasDescription"></ion-checkbox>
-      </ion-item>
-    </ion-col>
+    <ion-item>
+      <ion-label>Nombre</ion-label>
+      <ion-input type="text" [(ngModel)]="newExpense.name" name="name"></ion-input>
+    </ion-item>
   </ion-row>
 
   <ion-row no-padding>
-    <ion-col col-8 col-sm-8>
-      <ion-item>
-        <ion-label>Tipo</ion-label>
-        <select name="type" [(ngModel)]="newExpense.type">
-          <option *ngFor="let type of types" [ngValue]="type.name">{{type.name}}
-          </option>
-        </select>
-
-        <ion-input type="text" [(ngModel)]="newExpense.type" name="type"></ion-input>
-      </ion-item>
-    </ion-col>
-    <ion-col col-4 col-sm-4>
-      <ion-item>
-        <ion-label>Monto</ion-label>
-        <ion-input type="number" min="0" [(ngModel)]="newExpense.rode" name="rode"></ion-input>
-      </ion-item>
-    </ion-col>
+    <ion-item>
+      <ion-label>Tipo</ion-label>
+      <ion-select [(ngModel)]="newExpense.type">
+        <ion-option *ngFor="let type of types" value="{{type.name}}">{{type.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-row>
+  <ion-row no-padding>
+    <ion-item>
+      <ion-label>$ Monto</ion-label>
+      <ion-input type="number" min="0" [(ngModel)]="newExpense.rode" name="rode"></ion-input>
+    </ion-item>
   </ion-row>
 
   <ion-row no-padding>
-    <ion-col col-9 col-sm-9 [hidden]="!hasDescription">
-      <ion-item>
-        <ion-label>Descripción</ion-label>
-        <ion-textarea [(ngModel)]="newExpense.description" name="description"></ion-textarea>
-      </ion-item>
-    </ion-col>
+    <ion-item>
+      <ion-label>Descripción</ion-label>
+      <ion-checkbox [(ngModel)]="hasDescription"></ion-checkbox>
+    </ion-item>
+  </ion-row>
 
-    <ion-col col-3 col-sm-3>
-      <button ion-button type="submit" (click)="saveExpense(newExpense)">Agregar</button>
-    </ion-col>
+  <ion-row no-padding [hidden]="!hasDescription">
+    <ion-item>
+      <ion-label>Descripción</ion-label>
+      <ion-textarea [(ngModel)]="newExpense.description" name="description"></ion-textarea>
+    </ion-item>
+  </ion-row>
+  <ion-row no-padding>
+    <button ion-button type="submit" (click)="saveExpense(newExpense)">Agregar</button>
   </ion-row>
 
   <ion-item>
-    <ion-list [hidden]="!hasExpenses">
-      <ion-item>
-        <ion-row no-padding>
-          <ion-col col-3 col-sm-3>
-            Gasto
-          </ion-col>
-          <ion-col col-3 col-sm-3>
-            Tipo
-          </ion-col>
-          <ion-col col-3 col-sm-3>
-            Monto
-          </ion-col>
-          <ion-col col-1 col-sm-2>
-            Fecha
-          </ion-col>
+    <ion-label>Fecha Inicio</ion-label>
+    <ion-datetime displayFormat="DD MMM YYYY" max="2050-10-31" (ionChange)="realFilter()" [(ngModel)]="initDate"></ion-datetime>
 
-          <ion-col col-1 col-sm-1>
-          </ion-col>
-
-
-        </ion-row>
-      </ion-item>
-    </ion-list>
-
-    <ion-list [hidden]="!hasExpenses">
-      <ion-item *ngFor="let exp of expensesToShow">
-        <ion-row no-padding>
-          <ion-col col-3 col-sm-3>
-            {{exp.name}}
-          </ion-col>
-          <ion-col col-3 col-sm-3>
-            {{exp.type}}
-          </ion-col>
-          <ion-col col-3 col-sm-3>
-            {{exp.rode}}
-          </ion-col>
-          <ion-col col-2 col-sm-2>
-            {{exp.date}}
-          </ion-col>
-          <ion-col col-1 col-sm-1>
-            <button ion-button type="danger" (click)="deleteExpense(exp)"></button>
-          </ion-col>
-        </ion-row>
-      </ion-item>
-    </ion-list>
   </ion-item>
+
+
+  <ion-item>
+    <ion-label>Fecha Fin</ion-label>
+    <ion-datetime displayFormat="DD MMM YYYY" max="2050-10-31" (ionChange)="realFilter()" [(ngModel)]="endDate"></ion-datetime>
+
+  </ion-item>
+
+  <ion-list [hidden]="!hasExpenses">
+    <ion-item>
+      <ion-row no-padding>
+        <ion-col col-3 col-sm-3>
+          Gasto
+        </ion-col>
+        <ion-col col-3 col-sm-3>
+          Tipo
+        </ion-col>
+        <ion-col col-3 col-sm-3>
+          Monto
+        </ion-col>
+        <ion-col col-3 col-sm-3>
+          Fecha
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-list>
+
+  <ion-list [hidden]="!hasExpenses">
+    <ion-item *ngFor="let exp of expensesToShow" (click)="deleteExpense(exp)">
+      <ion-row no-padding>
+        <ion-col col-3 col-sm-3>
+          {{exp.name}}
+        </ion-col>
+        <ion-col col-3 col-sm-3>
+          {{exp.type}}
+        </ion-col>
+        <ion-col col-3 col-sm-3>
+          {{exp.rode | currency:"$":true:'1.0-0'}}
+        </ion-col>
+        <ion-col col-3 col-sm-3>
+          {{exp.date | date:'dd-MM-yyyy'}}
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-list>
   <ion-item>
     <ion-row [hidden]="hasExpenses">
       No se encuentran gastos para este rango de fechas.
@@ -117,5 +111,5 @@
 </ion-content>
 
 <ion-footer>
-  Total: {{getTotal()}}
+  Total: {{getTotal() | currency:"$":true:'1.0-0'}}
 </ion-footer>

@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
+
 import * as _ from 'underscore/underscore';
 
 /**
@@ -25,6 +26,14 @@ export class GastosPage {
   hasExpenses: boolean = false;
   hasDescription: boolean = false;
 
+  /*initDate: String = new Date().toISOString();
+  endDate: String = new Date().toISOString();*/
+
+  date = new Date();
+
+  initDate = new Date().toISOString();
+  endDate = new Date().toISOString();
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
 
     this.newExpense = {
@@ -40,10 +49,16 @@ export class GastosPage {
       this.loading = false;
     });
 
-    this.storage.get('tipos').then((val) => {
+    this.storage.get('types').then((val) => {
       this.types = val;
       console.log('types', this.types);
     });
+
+    this.initDate = new Date(this.date.getFullYear(), this.date.getMonth(), 1).toISOString();
+    this.endDate = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 1).toISOString();
+
+
+
   }
 
   ionViewDidLoad() {
@@ -60,6 +75,23 @@ export class GastosPage {
     } else {
       this.hasExpenses = false;
     }
+  }
+
+  realFilter() {
+    console.log(this.initDate, this.endDate);
+    var init = this.initDate;
+    var end = this.endDate;
+    if (!_.isEmpty(this.expensesToShow)) {
+      this.expensesToShow = _.filter(this.expenses, function(exp){
+        console.log("date", exp.date.toISOString());
+        return ((exp.date.toISOString() >= init) && (exp.date.toISOString() < end));
+      });
+
+      console.log("expensesToShow", this.expensesToShow);
+
+      this.getTotal();
+    }
+
   }
 
   saveExpense(newExpense) {
@@ -84,16 +116,25 @@ export class GastosPage {
 
   deleteExpense(expense) {
     console.log("borrar Gasto", expense);
+    var index = _.indexOf(this.expenses, expense);
+    console.log("index", index);
+    if (!_.isUndefined(index)) {
+      this.expenses = _.without(this.expenses, expense);
+      this.storage.set('gastos', this.expenses);
+      this.filterDate();
+      this.getTotal();
+    } else {
+      console.log("error, no se encuentra el gasto");
+    }
   }
 
   getTotal() {
     var total = 0;
-    if(!_.isEmpty(this.expensesToShow)){
+    if (!_.isEmpty(this.expensesToShow)) {
       for (let i = 0; i < this.expensesToShow.length; i++) {
-        total += this.expensesToShow[i].rode;
+        total += (this.expensesToShow[i].rode) * 1;
       }
     }
-
     return total;
   }
 
