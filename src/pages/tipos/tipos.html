@@ -22,7 +22,7 @@
     </ion-col>
     <ion-col col-4 col-sm-4>
       <ion-item>
-        <button ion-button type="submit" (click)="saveType(newType)">Crear</button>
+        <button ion-button type="submit" [disabled]="!validType(newType)" (click)="saveType(newType)">Crear</button>
       </ion-item>
     </ion-col>
   </ion-row>

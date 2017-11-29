@@ -49,7 +49,7 @@
     </ion-item>
   </ion-row>
   <ion-row no-padding>
-    <button ion-button type="submit" (click)="saveExpense(newExpense)">Agregar</button>
+    <button ion-button type="submit" [disabled]="!validExpense(newExpense)" (click)="saveExpense(newExpense)">Agregar</button>
   </ion-row>
 
   <ion-item>

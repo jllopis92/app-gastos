@@ -1,18 +1,100 @@
-<!--
-  Generated template for the IngresosPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>ingresos</ion-title>
+    <ion-title>
+      App Gastos
+    </ion-title>
+    <button ion-button end menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
 
+  <ion-row no-padding>
+    <ion-item>
+      <ion-label>Nombre</ion-label>
+      <ion-input type="text" [(ngModel)]="newIncome.name" name="name"></ion-input>
+    </ion-item>
+  </ion-row>
+
+  <ion-row no-padding>
+    <ion-item>
+      <ion-label>$ Monto</ion-label>
+      <ion-input type="number" min="0" [(ngModel)]="newIncome.rode" name="rode"></ion-input>
+    </ion-item>
+  </ion-row>
+
+  <ion-row no-padding>
+    <ion-item>
+      <ion-label>Descripción</ion-label>
+      <ion-checkbox [(ngModel)]="hasDescription"></ion-checkbox>
+    </ion-item>
+  </ion-row>
+
+  <ion-row no-padding [hidden]="!hasDescription">
+    <ion-item>
+      <ion-label>Descripción</ion-label>
+      <ion-textarea [(ngModel)]="newIncome.description" name="description"></ion-textarea>
+    </ion-item>
+  </ion-row>
+  <ion-row no-padding>
+    <button ion-button type="submit" [disabled]="!validIncome(newIncome)" (click)="saveIncome(newIncome)">Agregar</button>
+  </ion-row>
+
+  <ion-item>
+    <ion-label>Fecha Inicio</ion-label>
+    <ion-datetime displayFormat="DD MMM YYYY" max="2050-10-31" (ionChange)="realFilter()" [(ngModel)]="initDate"></ion-datetime>
+
+  </ion-item>
+
+
+  <ion-item>
+    <ion-label>Fecha Fin</ion-label>
+    <ion-datetime displayFormat="DD MMM YYYY" max="2050-10-31" (ionChange)="realFilter()" [(ngModel)]="endDate"></ion-datetime>
+
+  </ion-item>
+
+  <ion-list [hidden]="!hasIncomes">
+    <ion-item>
+      <ion-row no-padding>
+        <ion-col col-4 col-sm-4>
+          Ingreso
+        </ion-col>
+        <ion-col col-3 col-sm-3>
+          Monto
+        </ion-col>
+        <ion-col col-5 col-sm-5>
+          Fecha
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-list>
+
+  <ion-list [hidden]="!hasIncomes">
+    <ion-item *ngFor="let inc of incomesToShow" (click)="deleteIncome(inc)">
+      <ion-row no-padding>
+        <ion-col col-4 col-sm-4>
+          {{inc.name}}
+        </ion-col>
+        <ion-col col-3 col-sm-3>
+          {{inc.rode | currency:"$":true:'1.0-0'}}
+        </ion-col>
+        <ion-col col-5 col-sm-5>
+          {{inc.date | date:'dd-MM-yyyy'}}
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-list>
+  <ion-item>
+    <ion-row [hidden]="hasIncomes">
+      No se encuentran ingresos para este rango de fechas.
+    </ion-row>
+  </ion-item>
+
 </ion-content>
+
+<ion-footer>
+  Total: {{getTotal() | currency:"$":true:'1.0-0'}}
+</ion-footer>

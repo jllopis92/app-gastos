@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
-import {Storage} from '@ionic/storage';
+import {IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
+import {Storage} from '@ionic/storage'
 
 import * as _ from 'underscore/underscore';
 
@@ -34,7 +34,7 @@ export class GastosPage {
   initDate = new Date().toISOString();
   endDate = new Date().toISOString();
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, private alertCtrl: AlertController) {
 
     this.newExpense = {
       type: "",
@@ -91,8 +91,21 @@ export class GastosPage {
 
       this.getTotal();
     }
-
   }
+
+  validExpense(expense) {
+    if((_.isUndefined(expense.name)) || (expense.name =="")){
+      return false;
+    }
+    if((_.isUndefined(expense.type)) || (expense.type =="")){
+      return false;
+    }
+    if((_.isUndefined(expense.rode)) || (expense.rode == 0)){
+      return false;
+    }
+    return true;
+  }
+
 
   saveExpense(newExpense) {
     newExpense.date = new Date();
@@ -115,17 +128,36 @@ export class GastosPage {
   }
 
   deleteExpense(expense) {
-    console.log("borrar Gasto", expense);
-    var index = _.indexOf(this.expenses, expense);
-    console.log("index", index);
-    if (!_.isUndefined(index)) {
-      this.expenses = _.without(this.expenses, expense);
-      this.storage.set('gastos', this.expenses);
-      this.filterDate();
-      this.getTotal();
-    } else {
-      console.log("error, no se encuentra el gasto");
-    }
+    let alert = this.alertCtrl.create({
+      title: 'Confirm purchase',
+      message: '¿Esta seguro de eliminar el gasto '+expense.name+ '?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            console.log("borrar Gasto", expense);
+            var index = _.indexOf(this.expenses, expense);
+            console.log("index", index);
+            if (!_.isUndefined(index)) {
+              this.expenses = _.without(this.expenses, expense);
+              this.storage.set('gastos', this.expenses);
+              this.filterDate();
+              this.getTotal();
+            } else {
+              console.log("error, no se encuentra el gasto");
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   getTotal() {
@@ -136,6 +168,10 @@ export class GastosPage {
       }
     }
     return total;
+  }
+
+  presentConfirm() {
+
   }
 
 }
