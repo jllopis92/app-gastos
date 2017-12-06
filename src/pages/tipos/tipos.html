@@ -21,6 +21,7 @@
       </ion-item>
     </ion-col>
     <ion-col col-4 col-sm-4>
+
       <ion-item>
         <button ion-button type="submit" [disabled]="!validType(newType)" (click)="saveType(newType)">Crear</button>
       </ion-item>
@@ -50,7 +51,9 @@
             {{type.name}}
           </ion-col>
           <ion-col col-2 col-sm-2>
-            <button ion-button type="danger" (click)="deleteType(type)"></button>
+            <button ion-button color="danger" (click)="deleteType(type)" style="border-radius: 50%; border: 1px solid red;">
+              <ion-icon name="close"></ion-icon>
+            </button>
           </ion-col>
         </ion-row>
       </ion-item>

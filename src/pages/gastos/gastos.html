@@ -66,40 +66,40 @@
   </ion-item>
 
   <ion-list [hidden]="!hasExpenses">
-    <ion-item>
-      <ion-row no-padding>
-        <ion-col col-3 col-sm-3>
-          Gasto
-        </ion-col>
-        <ion-col col-3 col-sm-3>
-          Tipo
-        </ion-col>
-        <ion-col col-3 col-sm-3>
-          Monto
-        </ion-col>
-        <ion-col col-3 col-sm-3>
-          Fecha
-        </ion-col>
-      </ion-row>
-    </ion-item>
-  </ion-list>
+    <ion-item *ngFor="let exp of expensesToShow">
 
-  <ion-list [hidden]="!hasExpenses">
-    <ion-item *ngFor="let exp of expensesToShow" (click)="deleteExpense(exp)">
-      <ion-row no-padding>
-        <ion-col col-3 col-sm-3>
+      <ion-card>
+        <ion-card-header>
           {{exp.name}}
-        </ion-col>
-        <ion-col col-3 col-sm-3>
-          {{exp.type}}
-        </ion-col>
-        <ion-col col-3 col-sm-3>
-          {{exp.rode | currency:"$":true:'1.0-0'}}
-        </ion-col>
-        <ion-col col-3 col-sm-3>
-          {{exp.date | date:'dd-MM-yyyy'}}
-        </ion-col>
-      </ion-row>
+        </ion-card-header>
+        <ion-card-content>
+
+          <ion-row no-padding>
+            <ion-col col-7 col-sm-7>
+              {{exp.type}}
+            </ion-col>
+            <ion-col col-5 col-sm-5>
+              {{exp.rode | currency:"$":true:'1.0-0'}}
+            </ion-col>
+          </ion-row>
+          <ion-row no-padding>
+            <ion-col col-8 col-sm-8>
+              {{exp.date | date:'dd-MM-yyyy'}}
+            </ion-col>
+
+            <ion-col col-4 col-sm-4>
+              <button ion-button small color="danger" (click)="deleteExpense(exp)" style="border-radius: 50%; border: 1px solid red;">
+                <ion-icon name="close"></ion-icon>
+              </button>
+            </ion-col>
+          </ion-row>
+          <ion-row no-padding>
+            <ion-col col-12 col-sm-12>
+              {{exp.description}}
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
     </ion-item>
   </ion-list>
   <ion-item>

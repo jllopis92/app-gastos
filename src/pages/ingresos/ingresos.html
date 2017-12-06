@@ -57,34 +57,32 @@
   </ion-item>
 
   <ion-list [hidden]="!hasIncomes">
-    <ion-item>
-      <ion-row no-padding>
-        <ion-col col-4 col-sm-4>
-          Ingreso
-        </ion-col>
-        <ion-col col-3 col-sm-3>
-          Monto
-        </ion-col>
-        <ion-col col-5 col-sm-5>
-          Fecha
-        </ion-col>
-      </ion-row>
-    </ion-item>
-  </ion-list>
-
-  <ion-list [hidden]="!hasIncomes">
     <ion-item *ngFor="let inc of incomesToShow" (click)="deleteIncome(inc)">
-      <ion-row no-padding>
-        <ion-col col-4 col-sm-4>
+
+      <ion-card>
+        <ion-card-header>
           {{inc.name}}
-        </ion-col>
-        <ion-col col-3 col-sm-3>
-          {{inc.rode | currency:"$":true:'1.0-0'}}
-        </ion-col>
-        <ion-col col-5 col-sm-5>
-          {{inc.date | date:'dd-MM-yyyy'}}
-        </ion-col>
-      </ion-row>
+        </ion-card-header>
+        <ion-card-content>
+
+          <ion-row no-padding>
+            <ion-col col-12 col-sm-12>
+              {{inc.rode | currency:"$":true:'1.0-0'}}
+            </ion-col>
+          </ion-row>
+          <ion-row no-padding>
+            <ion-col col-8 col-sm-8>
+              {{inc.date | date:'dd-MM-yyyy'}}
+            </ion-col>
+
+            <ion-col col-4 col-sm-4>
+              <button ion-button small color="danger" (click)="deleteIncome(inc)" style="border-radius: 50%; border: 1px solid red;">
+                <ion-icon name="close"></ion-icon>
+              </button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
     </ion-item>
   </ion-list>
   <ion-item>
