@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, AlertController, ModalController, ViewController} from 'ionic-angular';
 import {Storage} from '@ionic/storage'
 
 import * as _ from 'underscore/underscore';
@@ -25,16 +25,13 @@ export class GastosPage {
   loading: boolean = true;
   hasExpenses: boolean = false;
   hasDescription: boolean = false;
-
-  /*initDate: String = new Date().toISOString();
-  endDate: String = new Date().toISOString();*/
+  filType = "";
 
   date = new Date();
-
   initDate = new Date().toISOString();
   endDate = new Date().toISOString();
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, private alertCtrl: AlertController, public modalCtrl: ModalController) {
 
     this.newExpense = {
       type: "",
@@ -56,9 +53,6 @@ export class GastosPage {
 
     this.initDate = new Date(this.date.getFullYear(), this.date.getMonth(), 1).toISOString();
     this.endDate = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 1).toISOString();
-
-
-
   }
 
   ionViewDidLoad() {
@@ -77,7 +71,7 @@ export class GastosPage {
     }
   }
 
-  realFilter() {
+  dateFilter() {
     console.log(this.initDate, this.endDate);
     var init = this.initDate;
     var end = this.endDate;
@@ -85,6 +79,22 @@ export class GastosPage {
       this.expensesToShow = _.filter(this.expenses, function(exp){
         console.log("date", exp.date.toISOString());
         return ((exp.date.toISOString() >= init) && (exp.date.toISOString() < end));
+      });
+
+      console.log("expensesToShow", this.expensesToShow);
+
+      this.getTotal();
+    }
+  }
+
+  typeFilter() {
+    console.log("type ", this.filType);
+    var tipo = this.filType;
+
+    if (!_.isEmpty(this.expenses)) {
+      this.expensesToShow = _.filter(this.expenses, function(exp){
+        console.log("exp", exp);
+        return (exp.type == tipo);
       });
 
       console.log("expensesToShow", this.expensesToShow);
@@ -170,8 +180,6 @@ export class GastosPage {
     return total;
   }
 
-  presentConfirm() {
-
-  }
-
 }
+
+

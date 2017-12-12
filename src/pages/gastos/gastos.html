@@ -52,23 +52,60 @@
     <button ion-button type="submit" [disabled]="!validExpense(newExpense)" (click)="saveExpense(newExpense)">Agregar</button>
   </ion-row>
 
-  <ion-item>
-    <ion-label>Fecha Inicio</ion-label>
-    <ion-datetime displayFormat="DD MMM YYYY" max="2050-10-31" (ionChange)="realFilter()" [(ngModel)]="initDate"></ion-datetime>
+    <ion-row no-padding>
+      <ion-col col-6 col-sm-6>
+        <ion-icon name="calendar"></ion-icon>
+        <ion-datetime displayFormat="DD MMM YYYY" max="2050-10-31" (ionChange)="dateFilter()" [(ngModel)]="initDate"></ion-datetime>
+      </ion-col>
+      <ion-col col-6 col-sm-6>
+        <ion-icon name="calendar"></ion-icon>
+        <ion-datetime displayFormat="DD MMM YYYY" max="2050-10-31" (ionChange)="dateFilter()" [(ngModel)]="endDate"></ion-datetime>
+      </ion-col>
+    </ion-row>
 
-  </ion-item>
+
+  <ion-row no-padding>
+    <ion-col col-12 col-sm-12>
+      <ion-item>
+        <ion-label>Filtro por tipo</ion-label>
+        <ion-select [(ngModel)]="filType" (ionChange)="typeFilter()">
+          <ion-option *ngFor="let type of types" value="{{type.name}}">{{type.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
 
 
-  <ion-item>
-    <ion-label>Fecha Fin</ion-label>
-    <ion-datetime displayFormat="DD MMM YYYY" max="2050-10-31" (ionChange)="realFilter()" [(ngModel)]="endDate"></ion-datetime>
-
-  </ion-item>
 
   <ion-list [hidden]="!hasExpenses">
-    <ion-item *ngFor="let exp of expensesToShow">
+    <ion-item *ngFor="let exp of expensesToShow" >
 
-      <ion-card>
+      <ion-grid (click)="deleteExpense(exp)">
+        <ion-row no-padding>
+          <ion-col col-7 col-sm-7>
+            {{exp.name}}
+          </ion-col>
+          <ion-col col-5 col-sm-5>
+            {{exp.rode | currency:"$":true:'1.0-0'}}
+          </ion-col>
+        </ion-row>
+        <ion-row no-padding>
+          <ion-col col-7 col-sm-7>
+            {{exp.type}}
+          </ion-col>
+          <ion-col col-5 col-sm-5>
+            {{exp.date | date:'dd-MM-yyyy'}}
+          </ion-col>
+
+          <!--<ion-col col-4 col-sm-4>
+            <button ion-button small color="danger" (click)="deleteExpense(exp)" style="border-radius: 50%; border: 1px solid red;">
+              <ion-icon name="close"></ion-icon>
+            </button>
+          </ion-col>-->
+        </ion-row>
+      </ion-grid>
+
+      <!--<ion-card>
         <ion-card-header>
           {{exp.name}}
         </ion-card-header>
@@ -99,7 +136,7 @@
             </ion-col>
           </ion-row>
         </ion-card-content>
-      </ion-card>
+      </ion-card>-->
     </ion-item>
   </ion-list>
   <ion-item>
