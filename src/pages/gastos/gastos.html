@@ -54,12 +54,12 @@
 
     <ion-row no-padding>
       <ion-col col-6 col-sm-6>
-        <ion-icon name="calendar"></ion-icon>
-        <ion-datetime displayFormat="DD MMM YYYY" max="2050-10-31" (ionChange)="dateFilter()" [(ngModel)]="initDate"></ion-datetime>
+        <ion-icon name="calendar" style="display: inline-block"></ion-icon>
+        <ion-datetime dateinline displayFormat="DD MMM YYYY" max="2050-10-31" (ionChange)="dateFilter()" [(ngModel)]="initDate" style="display: inline-block; padding-bottom: 0px; padding-top: 36px;"></ion-datetime>
       </ion-col>
       <ion-col col-6 col-sm-6>
-        <ion-icon name="calendar"></ion-icon>
-        <ion-datetime displayFormat="DD MMM YYYY" max="2050-10-31" (ionChange)="dateFilter()" [(ngModel)]="endDate"></ion-datetime>
+        <ion-icon name="calendar" style="display: inline-block"></ion-icon>
+        <ion-datetime dateinline displayFormat="DD MMM YYYY" max="2050-10-31" (ionChange)="dateFilter()" [(ngModel)]="endDate" style="display: inline-block; padding-bottom: 0px; padding-top: 36px;"></ion-datetime>
       </ion-col>
     </ion-row>
 
@@ -82,18 +82,19 @@
 
       <ion-grid (click)="deleteExpense(exp)">
         <ion-row no-padding>
-          <ion-col col-7 col-sm-7>
+          <ion-col col-12 col-sm-12>
             {{exp.name}}
           </ion-col>
-          <ion-col col-5 col-sm-5>
-            {{exp.rode | currency:"$":true:'1.0-0'}}
-          </ion-col>
+
         </ion-row>
         <ion-row no-padding>
-          <ion-col col-7 col-sm-7>
+          <ion-col col-6 col-sm-6>
             {{exp.type}}
           </ion-col>
-          <ion-col col-5 col-sm-5>
+          <ion-col col-3 col-sm-3>
+            {{exp.rode | currency:"$":true:'1.0-0'}}
+          </ion-col>
+          <ion-col col-3 col-sm-3>
             {{exp.date | date:'dd-MM-yyyy'}}
           </ion-col>
 
