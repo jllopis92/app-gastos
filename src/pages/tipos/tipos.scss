@@ -1,3 +1,30 @@
 page-tipos {
+  .backTitleCard{
+    background-color: #00D0CB !important;
+  }
+  .cardTitle{
+    font-weight: bold;
+    font-size: 20px;
+    color: #FFF !important;
+    text-align: center;
+  }
 
+  .backCard{
+    background-color: #FFF !important;
+    padding: 10px;
+    margin-bottom: 15px;
+  }
+
+  .backCard2{
+    background-color: #FFF !important;
+  }
+
+  .listItem{
+    padding: 0px !important;
+  }
+
+  .countFooter{
+    background-color: #E9E9E9 !important;
+    font-weight: bold;
+  }
 }

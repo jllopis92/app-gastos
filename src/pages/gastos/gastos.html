@@ -2,7 +2,6 @@
   <ion-navbar>
     <ion-title>
       App Gastos
-      <!--<p col-10 col-sm-11 class="subtitle">Hojas de Cargo</p>-->
     </ion-title>
     <button ion-button end menuToggle>
       <ion-icon name="menu"></ion-icon>
@@ -11,143 +10,124 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding style="background-color: #E9E9E9; padding: 0px;">
 
-  <ion-row no-padding>
-    <ion-item>
-      <ion-label>Nombre</ion-label>
-      <ion-input type="text" [(ngModel)]="newExpense.name" name="name"></ion-input>
-    </ion-item>
-  </ion-row>
-
-  <ion-row no-padding>
-    <ion-item>
-      <ion-label>Tipo</ion-label>
-      <ion-select [(ngModel)]="newExpense.type">
-        <ion-option *ngFor="let type of types" value="{{type.name}}">{{type.name}}</ion-option>
-      </ion-select>
-    </ion-item>
-  </ion-row>
-  <ion-row no-padding>
-    <ion-item>
-      <ion-label>$ Monto</ion-label>
-      <ion-input type="number" min="0" [(ngModel)]="newExpense.rode" name="rode"></ion-input>
-    </ion-item>
-  </ion-row>
-
-  <ion-row no-padding>
-    <ion-item>
-      <ion-label>Descripción</ion-label>
-      <ion-checkbox [(ngModel)]="hasDescription"></ion-checkbox>
-    </ion-item>
-  </ion-row>
-
-  <ion-row no-padding [hidden]="!hasDescription">
-    <ion-item>
-      <ion-label>Descripción</ion-label>
-      <ion-textarea [(ngModel)]="newExpense.description" name="description"></ion-textarea>
-    </ion-item>
-  </ion-row>
-  <ion-row no-padding>
-    <button ion-button type="submit" [disabled]="!validExpense(newExpense)" (click)="saveExpense(newExpense)">Agregar</button>
-  </ion-row>
-
+  <ion-grid class="backTitleCard">
+    <ion-label class="cardTitle"> Nuevo Gasto</ion-label>
+  </ion-grid>
+  <ion-grid class="backCard">
     <ion-row no-padding>
-      <ion-col col-6 col-sm-6>
-        <ion-icon name="calendar" style="display: inline-block"></ion-icon>
-        <ion-datetime dateinline displayFormat="DD MMM YYYY" max="2050-10-31" (ionChange)="dateFilter()" [(ngModel)]="initDate" style="display: inline-block; padding-bottom: 0px; padding-top: 36px;"></ion-datetime>
-      </ion-col>
-      <ion-col col-6 col-sm-6>
-        <ion-icon name="calendar" style="display: inline-block"></ion-icon>
-        <ion-datetime dateinline displayFormat="DD MMM YYYY" max="2050-10-31" (ionChange)="dateFilter()" [(ngModel)]="endDate" style="display: inline-block; padding-bottom: 0px; padding-top: 36px;"></ion-datetime>
-      </ion-col>
+      <ion-item>
+        <ion-label>Nombre</ion-label>
+        <ion-input type="text" [(ngModel)]="newExpense.name" name="name"></ion-input>
+      </ion-item>
     </ion-row>
 
-
-  <ion-row no-padding>
-    <ion-col col-12 col-sm-12>
+    <ion-row no-padding>
       <ion-item>
-        <ion-label>Filtro por tipo</ion-label>
-        <ion-select [(ngModel)]="filType" (ionChange)="typeFilter()">
+        <ion-label>Tipo</ion-label>
+        <ion-select [(ngModel)]="newExpense.type">
           <ion-option *ngFor="let type of types" value="{{type.name}}">{{type.name}}</ion-option>
         </ion-select>
       </ion-item>
-    </ion-col>
-  </ion-row>
+    </ion-row>
+    <ion-row no-padding>
+      <ion-item>
+        <ion-label>$ Monto</ion-label>
+        <ion-input type="number" min="0" [(ngModel)]="newExpense.rode" name="rode"></ion-input>
+      </ion-item>
+    </ion-row>
 
+    <ion-row no-padding>
+      <ion-item>
+        <ion-label>Descripción</ion-label>
+        <ion-checkbox [(ngModel)]="hasDescription"></ion-checkbox>
+      </ion-item>
+    </ion-row>
 
+    <ion-row no-padding [hidden]="!hasDescription">
+      <ion-item>
+        <ion-label>Descripción</ion-label>
+        <ion-textarea [(ngModel)]="newExpense.description" name="description"></ion-textarea>
+      </ion-item>
+    </ion-row>
+    <ion-row no-padding>
+      <button ion-button type="submit" [disabled]="!validExpense(newExpense)" (click)="saveExpense(newExpense)">
+        Agregar
+      </button>
+    </ion-row>
+  </ion-grid>
 
-  <ion-list [hidden]="!hasExpenses">
-    <ion-item *ngFor="let exp of expensesToShow" >
+  <ion-grid class="backTitleCard">
+    <ion-label class="cardTitle"> Gastos</ion-label>
+  </ion-grid>
+  <ion-grid class="backCard2">
+    <ion-row no-padding>
+      <ion-col col-6 col-sm-6>
+        <ion-icon name="calendar" style="display: contents !important;"></ion-icon>
+        <ion-datetime dateinline displayFormat="DD MMM YYYY" max="2050-10-31" (ionChange)="dateFilter()"
+                      [(ngModel)]="initDate"
+                      style="display: inline-block; padding-bottom: 0px;"></ion-datetime>
+      </ion-col>
+      <ion-col col-6 col-sm-6>
+        <ion-icon name="calendar" style="display: contents !important;"></ion-icon>
+        <ion-datetime dateinline displayFormat="DD MMM YYYY" max="2050-10-31" (ionChange)="dateFilter()"
+                      [(ngModel)]="endDate"
+                      style="display: inline-block; padding-bottom: 0px;"></ion-datetime>
+      </ion-col>
+    </ion-row>
 
-      <ion-grid (click)="deleteExpense(exp)">
-        <ion-row no-padding>
-          <ion-col col-12 col-sm-12>
-            {{exp.name}}
-          </ion-col>
+    <ion-row no-padding>
+      <ion-col col-12 col-sm-12>
+        <ion-item>
+          <ion-label>Filtro por tipo</ion-label>
+          <ion-select [(ngModel)]="filType" (ionChange)="typeFilter()">
+            <ion-option *ngFor="let type of types" value="{{type.name}}">{{type.name}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
-        </ion-row>
-        <ion-row no-padding>
-          <ion-col col-6 col-sm-6>
-            {{exp.type}}
-          </ion-col>
-          <ion-col col-3 col-sm-3>
-            {{exp.rode | currency:"$":true:'1.0-0'}}
-          </ion-col>
-          <ion-col col-3 col-sm-3>
-            {{exp.date | date:'dd-MM-yyyy'}}
-          </ion-col>
+    <ion-row no-padding>
+      <button ion-button color="danger" type="submit" (click)="resetFilter()">
+        Reiniciar Filtros
+      </button>
+    </ion-row>
 
-          <!--<ion-col col-4 col-sm-4>
-            <button ion-button small color="danger" (click)="deleteExpense(exp)" style="border-radius: 50%; border: 1px solid red;">
-              <ion-icon name="close"></ion-icon>
-            </button>
-          </ion-col>-->
-        </ion-row>
-      </ion-grid>
+    <ion-list [hidden]="!hasExpenses">
+      <ion-item *ngFor="let exp of expensesToShow" class="listItem">
 
-      <!--<ion-card>
-        <ion-card-header>
-          {{exp.name}}
-        </ion-card-header>
-        <ion-card-content>
-
+        <ion-grid (click)="deleteExpense(exp)">
+          <ion-row no-padding>
+            <ion-col col-12 col-sm-12 style="font-weight: bold">
+              {{exp.name}}
+            </ion-col>
+          </ion-row>
+          <ion-row no-padding>
+            <ion-col col-12 col-sm-12>
+              {{exp.rode | currency:"$":true:'1.0-0'}}
+            </ion-col>
+          </ion-row>
           <ion-row no-padding>
             <ion-col col-7 col-sm-7>
               {{exp.type}}
             </ion-col>
             <ion-col col-5 col-sm-5>
-              {{exp.rode | currency:"$":true:'1.0-0'}}
-            </ion-col>
-          </ion-row>
-          <ion-row no-padding>
-            <ion-col col-8 col-sm-8>
               {{exp.date | date:'dd-MM-yyyy'}}
             </ion-col>
 
-            <ion-col col-4 col-sm-4>
-              <button ion-button small color="danger" (click)="deleteExpense(exp)" style="border-radius: 50%; border: 1px solid red;">
-                <ion-icon name="close"></ion-icon>
-              </button>
-            </ion-col>
           </ion-row>
-          <ion-row no-padding>
-            <ion-col col-12 col-sm-12>
-              {{exp.description}}
-            </ion-col>
-          </ion-row>
-        </ion-card-content>
-      </ion-card>-->
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+    <ion-item>
+      <ion-row [hidden]="hasExpenses">
+        No se encuentran gastos para este rango de fechas.
+      </ion-row>
     </ion-item>
-  </ion-list>
-  <ion-item>
-    <ion-row [hidden]="hasExpenses">
-      No se encuentran gastos para este rango de fechas.
-    </ion-row>
-  </ion-item>
-
+  </ion-grid>
 </ion-content>
 
-<ion-footer>
+<ion-footer class="countFooter">
   Total: {{getTotal() | currency:"$":true:'1.0-0'}}
 </ion-footer>

@@ -5,63 +5,56 @@
       <!--<p col-10 col-sm-11 class="subtitle">Hojas de Cargo</p>-->
     </ion-title>
     <button ion-button end menuToggle>
-     <ion-icon name="menu"></ion-icon>
+      <ion-icon name="menu"></ion-icon>
     </button>
   </ion-navbar>
 </ion-header>
 
 
-<ion-content padding>
-
-  <ion-row no-padding>
-    <ion-col col-8 col-sm-8>
-      <ion-item>
-        <ion-label>Nombre</ion-label>
-        <ion-input type="text" [(ngModel)]="newType.name" name="name"></ion-input>
-      </ion-item>
-    </ion-col>
-    <ion-col col-4 col-sm-4>
-
-      <ion-item>
+<ion-content padding style="background-color: #E9E9E9; padding: 0px;">
+  <ion-grid class="backTitleCard">
+    <ion-label class="cardTitle"> Nuevo Tipo</ion-label>
+  </ion-grid>
+  <ion-grid class="backCard">
+    <ion-row no-padding>
+      <ion-col col-12 col-sm-12>
+        <ion-item>
+          <ion-label>Nombre</ion-label>
+          <ion-input type="text" [(ngModel)]="newType.name" name="name"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-sm-12>
         <button ion-button type="submit" [disabled]="!validType(newType)" (click)="saveType(newType)">Crear</button>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-
-  <ion-item>
-    <ion-list [hidden]="!hasTypes">
-      <ion-item>
-        <ion-row no-padding>
-
-          <ion-col col-10 col-sm-10>
-            Tipo
-          </ion-col>
-          <ion-col col-2 col-sm-2>
-          </ion-col>
-
-
-        </ion-row>
-      </ion-item>
-    </ion-list>
-
-    <ion-list [hidden]="!hasTypes">
-      <ion-item *ngFor="let type of types">
-        <ion-row no-padding>
-          <ion-col col-10 col-sm-10>
-            {{type.name}}
-          </ion-col>
-          <ion-col col-2 col-sm-2>
-            <button ion-button color="danger" (click)="deleteType(type)" style="border-radius: 50%; border: 1px solid red;">
-              <ion-icon name="close"></ion-icon>
-            </button>
-          </ion-col>
-        </ion-row>
-      </ion-item>
-    </ion-list>
-  </ion-item>
-  <ion-item>
-    <ion-row [hidden]="hasTypes">
-      No se encuentran Tipos de Gastos.
+      </ion-col>
     </ion-row>
-  </ion-item>
+
+  </ion-grid>
+  <ion-grid class="backTitleCard">
+    <ion-label class="cardTitle"> Tipos</ion-label>
+  </ion-grid>
+
+  <ion-grid class="backCard2">
+    <ion-item>
+      <ion-list [hidden]="!hasTypes">
+        <ion-item *ngFor="let type of types">
+          <ion-row no-padding>
+            <ion-col col-9 col-sm-9>
+              {{type.name}}
+            </ion-col>
+            <ion-col col-3 col-sm-3>
+              <button ion-button color="danger" (click)="deleteType(type)"
+                      style="border-radius: 50%; border: 1px solid red;">
+                <ion-icon name="close"></ion-icon>
+              </button>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-list>
+    </ion-item>
+    <ion-item>
+      <ion-row [hidden]="hasTypes">
+        No se encuentran Tipos de Gastos.
+      </ion-row>
+    </ion-item>
+  </ion-grid>
 </ion-content>
